@@ -175,13 +175,19 @@ cd server
 npm install
 ```
 
-Create `.env` file:
+Create `.env` file (ensure MongoDB Atlas is configured):
 
 ```
 PORT=5000
 MONGO_URI=your_mongodb_connection
 EMAIL_USER=your_email
 EMAIL_PASS=your_password
+```
+
+**Optional: Seed Demo Data**
+To quickly populate the database with demo users (Minimal and Cyberpunk themes):
+```bash
+node scripts/seed.js
 ```
 
 Run server:
@@ -231,12 +237,17 @@ npm start
 
 ---
 
-## 📸 Demo (Add After Deployment)
+## 📸 Live Demos
 
-```
-codefolio.com/demo1  → Minimal Template  
-codefolio.com/demo2  → Cyberpunk Template  
-```
+If the database is populated using the integrated seeder, you can log in to view the live dashboard and public portfolios at `http://localhost:5173/`:
+
+- **Minimal Template Persona:**
+  - Login: `johndoe` / `password123`
+  - URL: `/:username` -> `http://localhost:5173/johndoe`
+
+- **Cyberpunk PRO Persona:**
+  - Login: `neohacker` / `password123`
+  - URL: `/:username` -> `http://localhost:5173/neohacker`
 
 ---
 

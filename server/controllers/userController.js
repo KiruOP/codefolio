@@ -32,3 +32,67 @@ exports.updateProfile = async (req, res) => {
     res.status(500).send('Server Error');
   }
 };
+
+// @route   GET /api/users/skills
+// @desc    Get user skills
+// @access  Private
+exports.getSkills = async (req, res) => {
+  try {
+    const user = await User.findById(req.user.id);
+    if (!user) return res.status(404).json({ message: 'User not found' });
+    
+    res.json(user.skills || []);
+  } catch (err) {
+    console.error(err.message);
+    res.status(500).send('Server Error');
+  }
+};
+
+// @route   PUT /api/users/skills
+// @desc    Update user skills
+// @access  Private
+exports.updateSkills = async (req, res) => {
+  const { skills } = req.body; // Expects an array of { category, items }
+  
+  if (!Array.isArray(skills)) {
+    return res.status(400).json({ message: 'Skills must be an array' });
+  }
+
+  try {
+    const user = await User.findById(req.user.id);
+    if (!user) return res.status(404).json({ message: 'User not found' });
+
+    user.skills = skills;
+    await user.save();
+
+    res.json(user.skills);
+  } catch (err) {
+    console.error(err.message);
+    res.status(500).send('Server Error');
+  }
+};
+
+// @route   PUT /api/users/template
+// @desc    Update user template selection
+// @access  Private
+exports.updateTemplate = async (req, res) => {
+  const { templateId } = req.body;
+  if (!templateId) {
+    return res.status(400).json({ message: 'Template ID is required' });
+  }
+
+  try {
+    const user = await User.findById(req.user.id);
+    if (!user) return res.status(404).json({ message: 'User not found' });
+
+    user.templateId = templateId;
+    await user.save();
+    
+    // Return updated user omitting password
+    const updatedUser = await User.findById(req.user.id).select('-password');
+    res.json(updatedUser);
+  } catch (err) {
+    console.error(err.message);
+    res.status(500).send('Server Error');
+  }
+};

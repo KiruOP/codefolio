@@ -3,152 +3,106 @@ import { useOutletContext, Link } from 'react-router-dom';
 const Dashboard = () => {
   const { user } = useOutletContext();
   
-  // Format name
   const displayName = user?.profile?.name || user?.username || 'Developer Name';
+  const livePreviewUrl = `http://localhost:5173/${user?.username}`;
 
   return (
-    <>
-      <header className="mb-12 flex flex-col md:flex-row md:items-end justify-between gap-6">
+    <div className="flex flex-col h-full h-auto">
+      <header className="mb-8 flex flex-col md:flex-row md:items-end justify-between gap-6">
         <div className="max-w-2xl">
-          <span className="text-[0.65rem] uppercase tracking-[0.2em] font-bold text-primary mb-2 block">Workspace Overview</span>
-          <h2 className="text-4xl md:text-5xl font-black text-on-surface tracking-tighter leading-tight">
+          <span className="text-[0.65rem] uppercase tracking-[0.2em] font-bold text-primary mb-2 block">Workspace Settings</span>
+          <h2 className="text-3xl md:text-4xl font-black text-on-surface tracking-tighter leading-tight">
             Welcome back, <br /><span className="text-primary-container">{displayName}.</span>
           </h2>
         </div>
         <div className="flex items-center gap-4">
-          <button className="bg-surface-container-high text-on-surface px-6 py-3 rounded-xl font-semibold text-sm hover:bg-surface-container-highest transition-colors active:scale-95">
-            View Public Site
-          </button>
+          <a href={`/${user?.username}`} target="_blank" rel="noopener noreferrer" className="bg-primary text-white px-6 py-3 rounded-xl font-semibold text-sm hover:opacity-90 transition-all shadow-[0_4px_12px_rgba(133,83,0,0.2)] active:scale-95 flex items-center gap-2">
+            Open Full Site <span className="material-symbols-outlined text-sm">open_in_new</span>
+          </a>
         </div>
       </header>
 
-      {/* Bento Grid Layout */}
-      <div className="grid grid-cols-1 md:grid-cols-12 gap-6">
-        {/* Profile Summary Card */}
-        <div className="md:col-span-8 bg-surface-container-lowest rounded-[24px] p-8 shadow-sm flex flex-col md:flex-row gap-8 items-start relative overflow-hidden">
-          <div className="relative z-10 flex-1">
-            <div className="inline-flex items-center gap-2 px-3 py-1 rounded-full bg-primary/10 text-primary text-[0.7rem] font-bold uppercase tracking-wider mb-6">
-              <span className="w-1.5 h-1.5 rounded-full bg-primary animate-pulse"></span>
-              Active Theme: Minimal
+      {/* Main Split Interface */}
+      <div className="flex flex-col lg:flex-row gap-8 flex-1">
+        {/* Left Column: Stats & Actions */}
+        <div className="w-full lg:w-1/3 flex flex-col gap-6">
+          <div className="bg-surface-container-lowest rounded-[24px] p-6 shadow-sm border border-outline-variant/10">
+            <h3 className="text-lg font-bold text-on-surface mb-2">Live Status</h3>
+            <div className="flex items-center gap-3 mb-6">
+              <span className="relative flex h-3 w-3">
+                <span className="animate-ping absolute inline-flex h-full w-full rounded-full bg-emerald-400 opacity-75"></span>
+                <span className="relative inline-flex rounded-full h-3 w-3 bg-emerald-500"></span>
+              </span>
+              <p className="text-sm font-semibold text-emerald-700">Portfolio Compiled</p>
             </div>
-            <h3 className="text-2xl font-bold text-on-surface mb-2">Portfolio Identity</h3>
-            <p className="text-on-surface-variant leading-relaxed max-w-md mb-8">
-              Your profile is currently using the <span className="text-primary font-semibold">Minimalist</span> configuration. SEO optimization is active and your latest project is featured on the hero section.
-            </p>
-            <div className="flex gap-4">
-              <div className="p-4 rounded-xl bg-surface-container-low border border-outline-variant/15">
-                <p className="text-[0.65rem] uppercase font-bold text-on-surface-variant tracking-widest mb-1">Status</p>
-                <p className="text-sm font-bold">Publicly Visible</p>
-              </div>
-              <div className="p-4 rounded-xl bg-surface-container-low border border-outline-variant/15">
-                <p className="text-[0.65rem] uppercase font-bold text-on-surface-variant tracking-widest mb-1">Last Update</p>
-                <p className="text-sm font-bold">Just now</p>
+            
+            <div className="p-4 rounded-xl bg-surface-container-low border border-outline-variant/15 mb-4 group hover:bg-surface-container transition-colors">
+              <p className="text-[0.65rem] uppercase font-bold text-on-surface-variant tracking-widest mb-1">Active Template</p>
+              <div className="flex justify-between items-center">
+                <p className="text-sm font-bold capitalize text-primary">{user?.templateId || 'minimal'}</p>
+                <Link to="/templates" className="text-primary opacity-0 group-hover:opacity-100 transition-opacity">
+                  <span className="material-symbols-outlined text-sm">edit</span>
+                </Link>
               </div>
             </div>
+
+            <div className="grid grid-cols-2 gap-3 mb-6">
+              <Link to="/projects" className="p-4 rounded-xl bg-surface-container-low border border-outline-variant/15 hover:bg-surface-container transition-colors text-center shadow-sm hover:shadow-md">
+                <span className="material-symbols-outlined text-on-surface-variant mb-2">folder_open</span>
+                <p className="text-xs font-bold text-on-surface">Projects</p>
+              </Link>
+              <Link to="/skills" className="p-4 rounded-xl bg-surface-container-low border border-outline-variant/15 hover:bg-surface-container transition-colors text-center shadow-sm hover:shadow-md">
+                <span className="material-symbols-outlined text-on-surface-variant mb-2">terminal</span>
+                <p className="text-xs font-bold text-on-surface">Skills</p>
+              </Link>
+            </div>
+            
+            <h4 className="text-xs font-bold uppercase tracking-widest text-on-surface-variant mb-3">Checklist</h4>
+            <ul className="space-y-3">
+              <li className="flex items-center gap-3 text-sm text-slate-500">
+                <span className="material-symbols-outlined text-emerald-500 text-base">check_circle</span>
+                Configure Profile
+              </li>
+              <li className="flex items-center gap-3 text-sm text-slate-500">
+                <span className={user?.skills?.length > 0 ? "material-symbols-outlined text-emerald-500 text-base" : "material-symbols-outlined text-slate-300 text-base"}>
+                  {user?.skills?.length > 0 ? "check_circle" : "radio_button_unchecked"}
+                </span>
+                Add Skillset
+              </li>
+              <li className="flex items-center gap-3 text-sm text-slate-500">
+                <span className="material-symbols-outlined text-slate-300 text-base">radio_button_unchecked</span>
+                Publish First Case Study
+              </li>
+            </ul>
           </div>
-          <div className="w-full md:w-48 h-48 bg-surface-container rounded-2xl overflow-hidden shrink-0">
-            <img 
-              className="w-full h-full object-cover grayscale hover:grayscale-0 transition-all duration-700" 
-              alt="Workspace setup" 
-              src="https://images.unsplash.com/photo-1555066931-4365d14bab8c?ixlib=rb-4.0.3&auto=format&fit=crop&w=800&q=80" 
+        </div>
+
+        {/* Right Column: Live Iframe Preview */}
+        <div className="w-full lg:w-2/3 flex flex-col bg-surface-container-high rounded-[24px] overflow-hidden shadow-inner border border-outline-variant/30 flex-1 min-h-[500px] lg:min-h-[700px]">
+          <div className="bg-surface-container-highest px-4 py-2 border-b border-outline-variant/20 flex items-center justify-between">
+            <div className="flex gap-2">
+              <div className="w-3 h-3 rounded-full bg-error/40 mt-0.5"></div>
+              <div className="w-3 h-3 rounded-full bg-primary-container/40 mt-0.5"></div>
+              <div className="w-3 h-3 rounded-full bg-emerald-500/40 mt-0.5"></div>
+            </div>
+            <div className="text-[0.65rem] font-mono tracking-widest text-on-surface-variant uppercase flex items-center gap-2">
+              <span className="material-symbols-outlined text-[12px]">visibility</span>
+              Live Sandbox Preview
+            </div>
+            <div className="w-12"></div>
+          </div>
+          
+          <div className="flex-1 w-full bg-white relative">
+            {/* Real-time Iframe mapped to the Dynamic Routing pipeline */}
+            <iframe 
+              src={livePreviewUrl} 
+              className="absolute inset-0 w-full h-full border-none"
+              title="Portfolio Live Preview"
             />
-          </div>
-          {/* Artistic Bleed Element */}
-          <div className="absolute -bottom-10 -right-10 w-40 h-40 bg-primary/5 rounded-full blur-3xl"></div>
-        </div>
-
-        {/* Quick Stats / Completion */}
-        <div className="md:col-span-4 bg-inverse-surface rounded-[24px] p-8 text-white flex flex-col justify-between">
-          <div>
-            <h3 className="text-xl font-bold mb-6">Profile Completion</h3>
-            <div className="relative pt-1">
-              <div className="flex mb-2 items-center justify-between">
-                <div>
-                  <span className="text-xs font-semibold inline-block py-1 px-2 uppercase rounded-full bg-primary-container text-on-primary-container">
-                    85% Complete
-                  </span>
-                </div>
-              </div>
-              <div className="overflow-hidden h-2 mb-4 text-xs flex rounded-full bg-slate-700">
-                <div style={{ width: "85%" }} className="shadow-none flex flex-col text-center whitespace-nowrap text-white justify-center bg-primary-container"></div>
-              </div>
-            </div>
-          </div>
-          <ul className="space-y-4">
-            <li className="flex items-center gap-3 text-sm text-slate-300">
-              <span className="material-symbols-outlined text-primary-fixed-dim text-lg">check_circle</span>
-              Verified Skills
-            </li>
-            <li className="flex items-center gap-3 text-sm text-slate-300">
-              <span className="material-symbols-outlined text-primary-fixed-dim text-lg">check_circle</span>
-              Project Case Studies
-            </li>
-            <li className="flex items-center gap-3 text-sm text-slate-400">
-              <span className="material-symbols-outlined text-slate-600 text-lg">radio_button_unchecked</span>
-              Connect Custom Domain
-            </li>
-          </ul>
-        </div>
-
-        {/* Add New Project Card */}
-        <div className="md:col-span-4 bg-surface-container-high rounded-[24px] p-8 group cursor-pointer hover:bg-surface-container-highest transition-all duration-300 border-2 border-dashed border-outline-variant/30 flex flex-col items-center justify-center text-center">
-          <div className="w-16 h-16 rounded-full bg-white flex items-center justify-center mb-4 shadow-sm group-hover:scale-110 transition-transform">
-            <span className="material-symbols-outlined text-primary text-3xl">add</span>
-          </div>
-          <h3 className="text-lg font-bold text-on-surface">Add New Project</h3>
-          <p className="text-sm text-on-surface-variant mt-2">Create a new case study or import from GitHub</p>
-        </div>
-
-        {/* Projects Overview */}
-        <div className="md:col-span-8 bg-surface-container-lowest rounded-[24px] p-8 shadow-sm">
-          <div className="flex items-center justify-between mb-8">
-            <h3 className="text-xl font-bold text-on-surface">Active Projects</h3>
-            <a href="#" className="text-sm font-bold text-primary flex items-center gap-1 hover:underline underline-offset-4">
-              View All
-              <span className="material-symbols-outlined text-sm">arrow_forward</span>
-            </a>
-          </div>
-          <div className="space-y-4">
-            <div className="flex items-center justify-between p-4 rounded-xl hover:bg-surface-container-low transition-colors group">
-              <div className="flex items-center gap-4">
-                <div className="w-12 h-12 bg-tertiary-fixed rounded-lg flex items-center justify-center">
-                  <span className="material-symbols-outlined text-on-tertiary-container">monitoring</span>
-                </div>
-                <div>
-                  <h4 className="font-bold text-on-surface">Fintech Dashboard App</h4>
-                  <p className="text-xs text-on-surface-variant">Next.js • Tailwind • Supabase</p>
-                </div>
-              </div>
-              <div className="flex items-center gap-6">
-                <div className="text-right hidden sm:block">
-                  <p className="text-xs font-bold text-on-surface">1,240</p>
-                  <p className="text-[0.65rem] uppercase text-on-surface-variant font-bold tracking-tighter">Views</p>
-                </div>
-                <span className="material-symbols-outlined text-on-surface-variant opacity-0 group-hover:opacity-100 transition-opacity">edit</span>
-              </div>
-            </div>
-            <div className="flex items-center justify-between p-4 rounded-xl hover:bg-surface-container-low transition-colors group">
-              <div className="flex items-center gap-4">
-                <div className="w-12 h-12 bg-secondary-fixed rounded-lg flex items-center justify-center">
-                  <span className="material-symbols-outlined text-on-secondary-container">shopping_bag</span>
-                </div>
-                <div>
-                  <h4 className="font-bold text-on-surface">Eco-Commerce Platform</h4>
-                  <p className="text-xs text-on-surface-variant">Shopify • React • Node</p>
-                </div>
-              </div>
-              <div className="flex items-center gap-6">
-                <div className="text-right hidden sm:block">
-                  <p className="text-xs font-bold text-on-surface">892</p>
-                  <p className="text-[0.65rem] uppercase text-on-surface-variant font-bold tracking-tighter">Views</p>
-                </div>
-                <span className="material-symbols-outlined text-on-surface-variant opacity-0 group-hover:opacity-100 transition-opacity">edit</span>
-              </div>
-            </div>
           </div>
         </div>
       </div>
-    </>
+    </div>
   );
 };
 
