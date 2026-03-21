@@ -8,6 +8,8 @@ import Dashboard from './pages/Dashboard';
 import NotFound from './pages/NotFound';
 import Projects from './pages/Projects';
 import ProjectForm from './pages/ProjectForm';
+import Skills from './pages/Skills';
+import SkillForm from './pages/SkillForm';
 
 function App() {
   return (
@@ -24,6 +26,9 @@ function App() {
           <Route path="/projects" element={<Projects />} />
           <Route path="/projects/new" element={<ProjectForm />} />
           <Route path="/projects/edit/:id" element={<ProjectForm />} />
+          <Route path="/skills" element={<Skills />} />
+          <Route path="/skills/new" element={<SkillForm />} />
+          <Route path="/skills/edit/:index" element={<SkillForm />} />
         </Route>
 
         {/* 404 Catch-All Route */}
