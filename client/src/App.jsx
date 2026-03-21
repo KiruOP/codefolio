@@ -5,6 +5,7 @@ import Register from './pages/Register';
 import DashboardLayout from './templates/DashboardLayout';
 import ProfileSettings from './pages/ProfileSettings';
 import Dashboard from './pages/Dashboard';
+import NotFound from './pages/NotFound';
 
 function App() {
   return (
@@ -19,6 +20,9 @@ function App() {
           <Route path="/dashboard" element={<Dashboard />} />
           <Route path="/profile" element={<ProfileSettings />} />
         </Route>
+
+        {/* 404 Catch-All Route */}
+        <Route path="*" element={<NotFound />} />
       </Routes>
     </Router>
   );
