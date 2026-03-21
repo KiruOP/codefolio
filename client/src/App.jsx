@@ -4,6 +4,7 @@ import Login from './pages/Login';
 import Register from './pages/Register';
 import DashboardLayout from './templates/DashboardLayout';
 import ProfileSettings from './pages/ProfileSettings';
+import Dashboard from './pages/Dashboard';
 
 function App() {
   return (
@@ -15,9 +16,8 @@ function App() {
         
         {/* Protected Dashboard Routes */}
         <Route element={<DashboardLayout />}>
+          <Route path="/dashboard" element={<Dashboard />} />
           <Route path="/profile" element={<ProfileSettings />} />
-          {/* Default dashboard redirect for now */}
-          <Route path="/dashboard" element={<Navigate to="/profile" replace />} />
         </Route>
       </Routes>
     </Router>
