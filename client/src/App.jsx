@@ -6,6 +6,8 @@ import DashboardLayout from './templates/DashboardLayout';
 import ProfileSettings from './pages/ProfileSettings';
 import Dashboard from './pages/Dashboard';
 import NotFound from './pages/NotFound';
+import Projects from './pages/Projects';
+import ProjectForm from './pages/ProjectForm';
 
 function App() {
   return (
@@ -19,6 +21,9 @@ function App() {
         <Route element={<DashboardLayout />}>
           <Route path="/dashboard" element={<Dashboard />} />
           <Route path="/profile" element={<ProfileSettings />} />
+          <Route path="/projects" element={<Projects />} />
+          <Route path="/projects/new" element={<ProjectForm />} />
+          <Route path="/projects/edit/:id" element={<ProjectForm />} />
         </Route>
 
         {/* 404 Catch-All Route */}
