@@ -25,3 +25,11 @@ Thumbs.db
 .env.development.local
 .env.test.local
 .env.production.local
+
+#Extra folders & files
+stitch
+Design_System.md
+Design.md
+Project_Plan.md
+Project_Implementation.md
+user_schema.md
