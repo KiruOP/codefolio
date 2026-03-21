@@ -32,7 +32,7 @@ const Sidebar = () => {
         <NavLink to="/profile" icon="person" label="Profile" fill={true} />
         <NavLink to="/projects" icon="folder_open" label="Projects" />
         <NavLink to="/skills" icon="terminal" label="Skills" />
-        <NavLink to="/templates" icon="dashboard" label="Templates" />
+        <NavLink to="/templates" icon="layers" label="Templates" />
       </nav>
 
       <div className="mt-auto pt-6 border-t border-slate-200/50 dark:border-slate-800/50 space-y-1">

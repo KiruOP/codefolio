@@ -16,11 +16,13 @@ app.use(express.json());
 const authRoutes = require('./routes/authRoutes');
 const userRoutes = require('./routes/userRoutes');
 const projectRoutes = require('./routes/projectRoutes');
+const portfolioRoutes = require('./routes/portfolioRoutes');
 
 // Routes
 app.use('/api/auth', authRoutes);
 app.use('/api/users', userRoutes);
 app.use('/api/projects', projectRoutes);
+app.use('/api/portfolio', portfolioRoutes);
 
 app.get('/', (req, res) => {
   res.send('CodeFolio API is running...');

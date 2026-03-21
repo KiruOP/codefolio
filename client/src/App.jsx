@@ -10,6 +10,8 @@ import Projects from './pages/Projects';
 import ProjectForm from './pages/ProjectForm';
 import Skills from './pages/Skills';
 import SkillForm from './pages/SkillForm';
+import TemplateSelector from './pages/TemplateSelector';
+import Portfolio from './pages/Portfolio';
 
 function App() {
   return (
@@ -29,7 +31,11 @@ function App() {
           <Route path="/skills" element={<Skills />} />
           <Route path="/skills/new" element={<SkillForm />} />
           <Route path="/skills/edit/:index" element={<SkillForm />} />
+          <Route path="/templates" element={<TemplateSelector />} />
         </Route>
+
+        {/* Public Portfolio Route */}
+        <Route path="/:username" element={<Portfolio />} />
 
         {/* 404 Catch-All Route */}
         <Route path="*" element={<NotFound />} />
