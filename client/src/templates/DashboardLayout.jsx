@@ -25,7 +25,7 @@ const DashboardLayout = () => {
     <div className="bg-background text-on-background min-h-screen">
       <TopNav user={user} />
       <div className="flex pt-16">
-        <Sidebar />
+        <Sidebar user={user} />
         {/* Main Content Area */}
         <main className="flex-1 md:ml-64 p-6 md:p-10 pb-24 md:pb-10 bg-surface min-h-[calc(100vh-4rem)]">
           <Outlet context={{ user, setUser }} />

@@ -1,6 +1,6 @@
 import { Link, useLocation } from 'react-router-dom';
 
-const Sidebar = () => {
+const Sidebar = ({ user }) => {
   const location = useLocation();
 
   const isActive = (path) => location.pathname === path;
@@ -23,9 +23,16 @@ const Sidebar = () => {
 
   return (
     <aside className="h-screen w-64 fixed left-0 top-0 pt-20 bg-slate-50 dark:bg-slate-950 border-r border-slate-200/50 dark:border-slate-800/50 hidden md:flex flex-col gap-2 p-4 z-40">
-      <div className="px-3 mb-6">
-        <h2 className="text-lg font-bold text-amber-700">Workspace</h2>
-        <p className="text-xs text-slate-500 font-medium">Manage your digital atelier</p>
+      <div className="px-3 mb-6 flex items-center justify-between">
+        <div>
+          <h2 className="text-lg font-bold text-amber-700">Workspace</h2>
+          <p className="text-xs text-slate-500 font-medium">Manage your digital atelier</p>
+        </div>
+        {user?.isPro && (
+          <span className="bg-gradient-to-r from-amber-400 to-amber-600 text-[10px] font-bold text-white px-2 py-0.5 rounded-full uppercase tracking-wider shadow-sm">
+            PRO
+          </span>
+        )}
       </div>
 
       <nav className="flex-1 space-y-1">

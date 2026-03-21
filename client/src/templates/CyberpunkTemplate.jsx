@@ -303,6 +303,12 @@ const CyberpunkTemplate = ({ data }) => {
         </div>
       </footer>
 
+      {user.isPro && (
+        <div className="fixed top-24 right-6 z-[100] bg-[#1a1a1a]/80 backdrop-blur-sm border border-[#00f2ff] text-[#00f2ff] font-['Space_Grotesk'] font-bold text-[10px] tracking-[0.2em] uppercase px-4 py-2 flex items-center gap-2 shadow-[0_0_15px_rgba(0,242,255,0.4)]">
+          CODEFOLIO // <span className="text-[#ebb2ff]">PRO_NODE</span>
+        </div>
+      )}
+
       {/* Data Ticker */}
       <div className="fixed bottom-0 w-full overflow-hidden bg-[#0e0e0e] h-6 border-t border-[#3a494b]/30 flex items-center z-[100]">
         <div className="flex whitespace-nowrap animate-marquee">

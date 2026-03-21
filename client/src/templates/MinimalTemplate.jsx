@@ -235,6 +235,12 @@ const MinimalTemplate = ({ data }) => {
           </div>
         </div>
       </footer>
+
+      {user.isPro && (
+        <div className="fixed bottom-6 right-6 z-[100] bg-white text-[#855300] font-bold text-[10px] tracking-[0.2em] uppercase px-4 py-2 border border-[#855300]/20 shadow-[0_4px_24px_rgba(133,83,0,0.15)] rounded-full flex items-center gap-2 backdrop-blur-md">
+          <span className="material-symbols-outlined text-[14px]">diamond</span> CodeFolio Pro
+        </div>
+      )}
     </div>
   );
 };

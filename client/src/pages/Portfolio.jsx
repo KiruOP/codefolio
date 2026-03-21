@@ -1,6 +1,7 @@
 import { useState, useEffect } from 'react';
 import { useParams, Link } from 'react-router-dom';
 import TemplateEngine from '../templates/TemplateEngine';
+import SEO from '../components/SEO';
 
 const Portfolio = () => {
   const { username } = useParams();
@@ -49,9 +50,18 @@ const Portfolio = () => {
     );
   }
 
-  // Pass complete payload into the Template Factory
-  // It handles branching based on portfolioData.user.templateId
-  return <TemplateEngine portfolioData={portfolioData} />;
+  const profile = portfolioData?.user?.profile || {};
+
+  return (
+    <>
+      <SEO 
+        title={profile.name || portfolioData.user.username} 
+        description={profile.bio} 
+        name={profile.name} 
+      />
+      <TemplateEngine portfolioData={portfolioData} />
+    </>
+  );
 };
 
 export default Portfolio;
