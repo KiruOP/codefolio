@@ -6,7 +6,7 @@ const ProfileSettings = () => {
   
   // Local state for the form inputs
   const [formData, setFormData] = useState({
-    fullName: user?.fullName || 'Alex Rivero',
+    fullName: user?.profile?.name || user?.username || 'Alex Rivero',
     email: user?.email || 'alex.rivero@dev.io',
     location: user?.profile?.location || 'San Francisco, CA',
     bio: user?.profile?.bio || 'Passionate full-stack developer with 5+ years of experience building scalable web applications. Coffee lover and open-source contributor.',
@@ -32,7 +32,7 @@ const ProfileSettings = () => {
         method: 'PUT',
         headers: {
           'Content-Type': 'application/json',
-          'x-auth-token': token
+          'Authorization': `Bearer ${token}`
         },
         body: JSON.stringify(formData)
       });

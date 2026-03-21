@@ -10,11 +10,9 @@ exports.updateProfile = async (req, res) => {
     let user = await User.findById(req.user.id);
     if (!user) return res.status(404).json({ message: 'User not found' });
 
-    // Update main user fields if provided
-    if (fullName) user.username = fullName; // Assuming fullName maps to username for display
-
     // Update embedded profile details
     if (!user.profile) user.profile = {};
+    if (fullName) user.profile.name = fullName;
     if (location) user.profile.location = location;
     if (bio) user.profile.bio = bio;
 
