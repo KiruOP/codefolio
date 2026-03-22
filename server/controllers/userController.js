@@ -18,7 +18,7 @@ exports.getProfile = async (req, res) => {
 // @desc    Update user profile & social links
 // @access  Private
 exports.updateProfile = async (req, res) => {
-  const { fullName, location, bio, github, linkedin, website } = req.body;
+  const { fullName, location, bio, github, linkedin, website, avatar, resumeData, resumeName } = req.body;
 
   try {
     let user = await User.findById(req.user.id);
@@ -26,16 +26,24 @@ exports.updateProfile = async (req, res) => {
 
     // Update embedded profile details
     if (!user.profile) user.profile = {};
-    if (fullName) user.profile.name = fullName;
-    if (location) user.profile.location = location;
-    if (bio) user.profile.bio = bio;
+    if (fullName !== undefined) user.profile.name = fullName;
+    if (location !== undefined) user.profile.location = location;
+    if (bio !== undefined) user.profile.bio = bio;
+
+    // Profile picture (base64 dataURL)
+    if (avatar !== undefined) user.profile.avatar = avatar;
+
+    // Resume PDF (base64)
+    if (resumeData !== undefined) user.profile.resumeData = resumeData;
+    if (resumeName !== undefined) user.profile.resumeName = resumeName;
 
     // Update embedded social links
     if (!user.profile.socialLinks) user.profile.socialLinks = {};
-    if (github) user.profile.socialLinks.github = github;
-    if (linkedin) user.profile.socialLinks.linkedin = linkedin;
-    if (website) user.profile.socialLinks.website = website;
+    if (github !== undefined) user.profile.socialLinks.github = github;
+    if (linkedin !== undefined) user.profile.socialLinks.linkedin = linkedin;
+    if (website !== undefined) user.profile.socialLinks.website = website;
 
+    user.markModified('profile');
     await user.save();
     
     // Return updated user omitting password

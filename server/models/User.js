@@ -10,10 +10,14 @@ const socialLinksSchema = new mongoose.Schema({
 const profileSchema = new mongoose.Schema({
   name: { type: String, required: true },
   bio: { type: String },
-  avatar: { type: String },
-  resumeUrl: { type: String },
+  location: { type: String },
+  avatar: { type: String },        // base64 dataURL (image < 100kb)
+  resumeData: { type: String },    // base64 encoded PDF data
+  resumeName: { type: String },    // original filename e.g. "john_cv.pdf"
+  resumeUrl: { type: String },     // optional external link fallback
   socialLinks: socialLinksSchema,
 });
+
 
 const skillSchema = new mongoose.Schema({
   category: { type: String }, // e.g., Frontend

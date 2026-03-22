@@ -3,7 +3,7 @@ import { useState, useEffect } from 'react';
 const MinimalTemplate = ({ data }) => {
   const { user, projects, skills } = data;
   const profile = user.profile || {};
-  const { name, bio, company, location, socialLinks } = profile;
+  const { name, bio, company, location, socialLinks, resumeData, resumeName } = profile;
   
   const [formData, setFormData] = useState({ name: '', email: '', message: '' });
   const [status, setStatus] = useState(null);
@@ -92,6 +92,16 @@ const MinimalTemplate = ({ data }) => {
                 <a href="#projects" className="bg-[#e1e8fd] text-[#141b2b] px-8 py-4 rounded-xl font-bold text-lg hover:bg-[#dce2f7] transition-all flex items-center justify-center">
                   View Work
                 </a>
+                {resumeData && (
+                  <a
+                    href={resumeData}
+                    download={resumeName || 'resume.pdf'}
+                    className="bg-white border-2 border-[#855300] text-[#855300] px-8 py-4 rounded-xl font-bold text-lg hover:bg-[#ffddb8]/30 transition-all flex items-center justify-center gap-2"
+                  >
+                    <span className="material-symbols-outlined text-xl">download</span>
+                    Resume
+                  </a>
+                )}
               </div>
             </div>
           </div>

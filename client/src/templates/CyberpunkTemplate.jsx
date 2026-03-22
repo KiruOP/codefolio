@@ -3,7 +3,7 @@ import { useState, useEffect } from 'react';
 const CyberpunkTemplate = ({ data }) => {
   const { user, projects, skills } = data;
   const profile = user.profile || {};
-  const { name, bio, company, location, socialLinks } = profile;
+  const { name, bio, company, location, socialLinks, resumeData, resumeName } = profile;
 
   const [formData, setFormData] = useState({ name: '', email: '', message: '' });
   const [status, setStatus] = useState(null);
@@ -124,6 +124,16 @@ const CyberpunkTemplate = ({ data }) => {
             <a href="#projects" className="px-10 py-4 border border-[#00f2ff]/20 text-[#00f2ff] font-['Space_Grotesk'] font-bold uppercase tracking-widest hover:bg-[#00f2ff]/10 transition-all duration-300 inline-block text-center">
               ACCESS_DATA
             </a>
+            {resumeData && (
+              <a
+                href={resumeData}
+                download={resumeName || 'resume.pdf'}
+                className="px-10 py-4 border border-[#ebb2ff]/30 text-[#ebb2ff] font-['Space_Grotesk'] font-bold uppercase tracking-widest hover:bg-[#ebb2ff]/10 transition-all duration-300 inline-block text-center flex items-center gap-2"
+              >
+                <span className="material-symbols-outlined text-[18px]">download</span>
+                DOWNLOAD_CV
+              </a>
+            )}
           </div>
         </div>
         <div className="absolute bottom-10 left-6 flex flex-col gap-2 opacity-50">
