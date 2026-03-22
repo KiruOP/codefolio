@@ -45,6 +45,9 @@ function App() {
             {/* Public Portfolio Route */}
             <Route path="/:username" element={<Portfolio />} />
 
+            {/* Explicit 404 Route (for Navigate to="/404") */}
+            <Route path="/404" element={<NotFound />} />
+
             {/* 404 Catch-All Route */}
             <Route path="*" element={<NotFound />} />
           </Routes>

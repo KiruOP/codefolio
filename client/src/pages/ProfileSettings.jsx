@@ -1,22 +1,50 @@
-import React, { useState } from 'react';
+import React, { useState, useEffect } from 'react';
 import { useOutletContext } from 'react-router-dom';
 
 const ProfileSettings = () => {
-  const { user } = useOutletContext();
+  const { user, setUser } = useOutletContext();
   
-  // Local state for the form inputs
   const [formData, setFormData] = useState({
-    fullName: user?.profile?.name || user?.username || 'Alex Rivero',
-    email: user?.email || 'alex.rivero@dev.io',
-    location: user?.profile?.location || 'San Francisco, CA',
-    bio: user?.profile?.bio || 'Passionate full-stack developer with 5+ years of experience building scalable web applications. Coffee lover and open-source contributor.',
-    github: user?.profile?.socialLinks?.github || 'github.com/arivero',
-    linkedin: user?.profile?.socialLinks?.linkedin || 'linkedin.com/in/alexrivero',
-    website: user?.profile?.socialLinks?.website || 'arivero.dev',
+    fullName: '',
+    email: '',
+    location: '',
+    bio: '',
+    github: '',
+    linkedin: '',
+    website: '',
   });
 
+  const [loading, setLoading] = useState(true);
   const [successMessage, setSuccessMessage] = useState('');
   const [errorMessage, setErrorMessage] = useState('');
+
+  // Fetch profile data from API on mount
+  useEffect(() => {
+    const fetchProfile = async () => {
+      try {
+        const token = localStorage.getItem('codefolio_token');
+        const res = await fetch('http://localhost:5000/api/users/profile', {
+          headers: { 'Authorization': `Bearer ${token}` }
+        });
+        const data = await res.json();
+        if (!res.ok) throw new Error(data.message);
+        setFormData({
+          fullName: data.profile?.name || data.username || '',
+          email: data.email || '',
+          location: data.profile?.location || '',
+          bio: data.profile?.bio || '',
+          github: data.profile?.socialLinks?.github || '',
+          linkedin: data.profile?.socialLinks?.linkedin || '',
+          website: data.profile?.socialLinks?.website || '',
+        });
+      } catch (err) {
+        setErrorMessage('Failed to load profile: ' + err.message);
+      } finally {
+        setLoading(false);
+      }
+    };
+    fetchProfile();
+  }, []);
 
   const handleChange = (e) => {
     setFormData({ ...formData, [e.target.name]: e.target.value });
@@ -42,17 +70,20 @@ const ProfileSettings = () => {
       
       setSuccessMessage('Profile updated successfully!');
       
-      // Update local storage context
+      // Update local storage context so sidebar name reflects change
       const userDataStr = localStorage.getItem('codefolio_user');
       if (userDataStr) {
         const userData = JSON.parse(userDataStr);
         userData.user = data;
         localStorage.setItem('codefolio_user', JSON.stringify(userData));
+        if (setUser) setUser(data);
       }
     } catch (err) {
       setErrorMessage(err.message);
     }
   };
+
+  if (loading) return <div className="p-10 text-center text-slate-500">Loading profile...</div>;
 
   return (
     <div className="max-w-4xl mx-auto">

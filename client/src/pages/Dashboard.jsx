@@ -1,24 +1,49 @@
 import { useOutletContext, Link } from 'react-router-dom';
+import { useEffect, useState } from 'react';
 
 const Dashboard = () => {
-  const { user } = useOutletContext();
-  
-  const displayName = user?.profile?.name || user?.username || 'Developer Name';
-  const livePreviewUrl = `http://localhost:5173/${user?.username}`;
+  const { user: ctxUser } = useOutletContext();
+  const [user, setUser] = useState(ctxUser);
+
+  // If the context user isn't available yet (layout still loading), get from localStorage
+  useEffect(() => {
+    if (!ctxUser) {
+      const stored = localStorage.getItem('codefolio_user');
+      if (stored) {
+        try {
+          setUser(JSON.parse(stored).user);
+        } catch {}
+      }
+    } else {
+      setUser(ctxUser);
+    }
+  }, [ctxUser]);
+
+  const displayName = user?.profile?.name || user?.username || 'Developer';
+  const username = user?.username;
+  const livePreviewUrl = username ? `http://localhost:5173/${username}` : null;
+  const portfolioUrl = username ? `/${username}` : null;
 
   return (
-    <div className="flex flex-col h-full h-auto">
+    <div className="flex flex-col h-full">
       <header className="mb-8 flex flex-col md:flex-row md:items-end justify-between gap-6">
         <div className="max-w-2xl">
-          <span className="text-[0.65rem] uppercase tracking-[0.2em] font-bold text-primary mb-2 block">Workspace Settings</span>
+          <span className="text-[0.65rem] uppercase tracking-[0.2em] font-bold text-primary mb-2 block">Workspace</span>
           <h2 className="text-3xl md:text-4xl font-black text-on-surface tracking-tighter leading-tight">
             Welcome back, <br /><span className="text-primary-container">{displayName}.</span>
           </h2>
         </div>
         <div className="flex items-center gap-4">
-          <a href={`/${user?.username}`} target="_blank" rel="noopener noreferrer" className="bg-primary text-white px-6 py-3 rounded-xl font-semibold text-sm hover:opacity-90 transition-all shadow-[0_4px_12px_rgba(133,83,0,0.2)] active:scale-95 flex items-center gap-2">
-            Open Full Site <span className="material-symbols-outlined text-sm">open_in_new</span>
-          </a>
+          {portfolioUrl && (
+            <Link
+              to={portfolioUrl}
+              target="_blank"
+              rel="noopener noreferrer"
+              className="bg-primary text-white px-6 py-3 rounded-xl font-semibold text-sm hover:opacity-90 transition-all shadow-[0_4px_12px_rgba(133,83,0,0.2)] active:scale-95 flex items-center gap-2"
+            >
+              Open Full Site <span className="material-symbols-outlined text-sm">open_in_new</span>
+            </Link>
+          )}
         </div>
       </header>
 
@@ -87,18 +112,26 @@ const Dashboard = () => {
             </div>
             <div className="text-[0.65rem] font-mono tracking-widest text-on-surface-variant uppercase flex items-center gap-2">
               <span className="material-symbols-outlined text-[12px]">visibility</span>
-              Live Sandbox Preview
+              {username ? `localhost:5173/${username}` : 'Live Preview'}
             </div>
             <div className="w-12"></div>
           </div>
           
           <div className="flex-1 w-full bg-white relative">
-            {/* Real-time Iframe mapped to the Dynamic Routing pipeline */}
-            <iframe 
-              src={livePreviewUrl} 
-              className="absolute inset-0 w-full h-full border-none"
-              title="Portfolio Live Preview"
-            />
+            {livePreviewUrl ? (
+              <iframe 
+                src={livePreviewUrl} 
+                className="absolute inset-0 w-full h-full border-none"
+                title="Portfolio Live Preview"
+              />
+            ) : (
+              <div className="absolute inset-0 flex items-center justify-center text-slate-400 text-sm">
+                <div className="text-center">
+                  <span className="material-symbols-outlined text-4xl mb-2 block animate-spin" style={{animationDuration:'1.5s'}}>refresh</span>
+                  Loading preview...
+                </div>
+              </div>
+            )}
           </div>
         </div>
       </div>

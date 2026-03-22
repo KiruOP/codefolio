@@ -1,20 +1,47 @@
-import { Link } from 'react-router-dom';
+import { useEffect } from 'react';
+import { Link, useNavigate } from 'react-router-dom';
 
 const LandingPage = () => {
+  const navigate = useNavigate();
+
+  // If user is already logged in, clicking login/get started goes to dashboard
+  const isLoggedIn = !!localStorage.getItem('codefolio_token');
+
+  const handleAuthLink = (e, path) => {
+    e.preventDefault();
+    if (isLoggedIn) {
+      navigate('/dashboard');
+    } else {
+      navigate(path);
+    }
+  };
+
   return (
     <div className="bg-surface text-on-surface selection:bg-primary-container selection:text-on-primary-container min-h-screen">
       {/* Top Navigation Bar */}
       <nav className="fixed top-0 w-full z-50 bg-slate-50/80 backdrop-blur-xl shadow-sm">
         <div className="max-w-7xl mx-auto flex justify-between items-center px-6 py-3">
-          <div className="text-xl font-bold tracking-tighter text-amber-700">CodeFolio</div>
+          <Link to="/" className="text-xl font-bold tracking-tighter text-amber-700">CodeFolio</Link>
           <div className="hidden md:flex items-center gap-8">
             <a href="#features" className="text-amber-700 font-semibold border-b-2 border-amber-600 transition-all duration-200 ease-in-out py-1">Features</a>
-            <a href="#" className="text-slate-600 hover:text-slate-900 transition-all duration-200 ease-in-out">Templates</a>
-            <a href="#" className="text-slate-600 hover:text-slate-900 transition-all duration-200 ease-in-out">Pricing</a>
+            <a href="#templates" className="text-slate-600 hover:text-slate-900 transition-all duration-200 ease-in-out">Templates</a>
+            <a href="#pricing" className="text-slate-600 hover:text-slate-900 transition-all duration-200 ease-in-out">Pricing</a>
           </div>
           <div className="flex items-center gap-4">
-            <Link to="/login" className="hidden lg:flex active:scale-95 transition-transform text-slate-600 font-medium px-4 py-2 rounded-lg hover:bg-slate-100/50">Log In</Link>
-            <Link to="/register" className="bg-gradient-to-br from-primary to-primary-container text-on-primary font-semibold px-6 py-2.5 rounded-lg shadow-sm active:scale-95 transition-transform">Get Started</Link>
+            <a
+              href="/login"
+              onClick={(e) => handleAuthLink(e, '/login')}
+              className="hidden lg:flex active:scale-95 transition-transform text-slate-600 font-medium px-4 py-2 rounded-lg hover:bg-slate-100/50"
+            >
+              Log In
+            </a>
+            <a
+              href="/register"
+              onClick={(e) => handleAuthLink(e, '/register')}
+              className="bg-gradient-to-br from-primary to-primary-container text-on-primary font-semibold px-6 py-2.5 rounded-lg shadow-sm active:scale-95 transition-transform"
+            >
+              Get Started
+            </a>
           </div>
         </div>
         <div className="bg-slate-200/20 h-[1px] w-full"></div>
@@ -35,12 +62,16 @@ const LandingPage = () => {
               Stop wrestling with CSS. Connect your GitHub, choose a curated template, and deploy your professional site in seconds.
             </p>
             <div className="flex flex-col sm:flex-row gap-4 mb-20">
-              <Link to="/register" className="bg-gradient-to-br from-primary to-primary-container text-on-primary text-lg font-bold px-8 py-4 rounded-xl shadow-lg active:scale-95 transition-all text-white">
+              <a
+                href="/register"
+                onClick={(e) => handleAuthLink(e, '/register')}
+                className="bg-gradient-to-br from-primary to-primary-container text-on-primary text-lg font-bold px-8 py-4 rounded-xl shadow-lg active:scale-95 transition-all text-white"
+              >
                 Get Started
-              </Link>
-              <button className="bg-surface-container-high text-on-surface text-lg font-bold px-8 py-4 rounded-xl active:scale-95 transition-all hover:bg-surface-variant">
+              </a>
+              <a href="#features" className="bg-surface-container-high text-on-surface text-lg font-bold px-8 py-4 rounded-xl active:scale-95 transition-all hover:bg-surface-variant">
                 View Templates
-              </button>
+              </a>
             </div>
 
             {/* Bento-style Preview Image */}
@@ -94,7 +125,6 @@ const LandingPage = () => {
               <p className="text-4xl font-extrabold text-on-surface tracking-tight">Built for your professional growth.</p>
             </div>
             <div className="grid grid-cols-1 md:grid-cols-3 gap-8">
-              {/* Feature 1 */}
               <div className="bg-surface-container-lowest p-10 rounded-2xl shadow-sm hover:translate-y-[-4px] transition-transform duration-300">
                 <div className="w-14 h-14 bg-primary-container/20 rounded-xl flex items-center justify-center text-primary mb-8">
                   <span className="material-symbols-outlined text-3xl">bolt</span>
@@ -104,7 +134,6 @@ const LandingPage = () => {
                   Import your projects directly from GitHub or GitLab. We handle the data fetching, you enjoy the results.
                 </p>
               </div>
-              {/* Feature 2 */}
               <div className="bg-surface-container-lowest p-10 rounded-2xl shadow-sm hover:translate-y-[-4px] transition-transform duration-300">
                 <div className="w-14 h-14 bg-primary-container/20 rounded-xl flex items-center justify-center text-primary mb-8">
                   <span className="material-symbols-outlined text-3xl">palette</span>
@@ -114,7 +143,6 @@ const LandingPage = () => {
                   Tweak colors, typography, and layouts with a real-time editor that requires zero coding knowledge.
                 </p>
               </div>
-              {/* Feature 3 */}
               <div className="bg-surface-container-lowest p-10 rounded-2xl shadow-sm hover:translate-y-[-4px] transition-transform duration-300">
                 <div className="w-14 h-14 bg-primary-container/20 rounded-xl flex items-center justify-center text-primary mb-8">
                   <span className="material-symbols-outlined text-3xl">visibility</span>
@@ -140,9 +168,13 @@ const LandingPage = () => {
                     Join 5,000+ developers who built their professional home with CodeFolio.
                   </p>
                 </div>
-                <Link to="/register" className="whitespace-nowrap bg-white text-inverse-surface font-black px-10 py-5 rounded-2xl hover:bg-primary-fixed transition-colors text-lg active:scale-95">
+                <a
+                  href="/register"
+                  onClick={(e) => handleAuthLink(e, '/register')}
+                  className="whitespace-nowrap bg-white text-inverse-surface font-black px-10 py-5 rounded-2xl hover:bg-primary-fixed transition-colors text-lg active:scale-95"
+                >
                   Get Started Free
-                </Link>
+                </a>
               </div>
             </div>
           </div>
@@ -154,8 +186,10 @@ const LandingPage = () => {
         <div className="max-w-7xl mx-auto px-6 py-12">
           <div className="flex flex-col md:flex-row justify-between items-center gap-8">
             <div className="flex flex-col items-center md:items-start gap-4">
-              <div className="text-lg font-black text-slate-900">CodeFolio</div>
-              <p className="text-xs uppercase tracking-widest font-semibold text-slate-500">© 2024 CodeFolio. Crafted for developers.</p>
+              <Link to="/" className="text-lg font-black text-amber-700">CodeFolio</Link>
+              <p className="text-xs uppercase tracking-widest font-semibold text-slate-500">
+                © {new Date().getFullYear()} CodeFolio. Crafted for developers.
+              </p>
             </div>
             <div className="flex gap-8">
               <a href="#" className="text-xs uppercase tracking-widest font-semibold text-slate-500 hover:text-amber-600 transition-colors underline-offset-4 hover:underline">Privacy</a>
