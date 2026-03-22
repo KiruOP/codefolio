@@ -5,7 +5,7 @@ const Dashboard = () => {
 
   const displayName = user?.profile?.name || user?.username || 'Developer';
   const username = user?.username;
-  const livePreviewUrl = username ? `http://localhost:5173/${username}` : null;
+  const livePreviewUrl = username ? `${window.location.origin}/${username}` : null;
   const portfolioUrl = username ? `/${username}` : null;
 
   return (

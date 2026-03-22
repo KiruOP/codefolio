@@ -1,4 +1,5 @@
 import { useState, useEffect } from 'react';
+import API_URL from '../config';
 import { useNavigate, useParams, Link } from 'react-router-dom';
 
 const ProjectForm = () => {
@@ -26,7 +27,7 @@ const ProjectForm = () => {
   const fetchProject = async () => {
     try {
       const token = localStorage.getItem('codefolio_token');
-      const res = await fetch('http://localhost:5000/api/projects', {
+      const res = await fetch(`${API_URL}/api/projects`, {
         headers: { 'Authorization': `Bearer ${token}` }
       });
       const data = await res.json();
@@ -62,7 +63,7 @@ const ProjectForm = () => {
 
     try {
       const token = localStorage.getItem('codefolio_token');
-      const url = id ? `http://localhost:5000/api/projects/${id}` : 'http://localhost:5000/api/projects';
+      const url = id ? `${API_URL}/api/projects/${id}` : `${API_URL}/api/projects`;
       const method = id ? 'PUT' : 'POST';
 
       const payload = {

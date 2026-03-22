@@ -1,4 +1,5 @@
 import { useState, useEffect } from 'react';
+import API_URL from '../config';
 import { useParams, Navigate } from 'react-router-dom';
 import TemplateEngine from '../templates/TemplateEngine';
 import SEO from '../components/SEO';
@@ -12,7 +13,7 @@ const Portfolio = () => {
   useEffect(() => {
     const fetchPortfolio = async () => {
       try {
-        const res = await fetch(`http://localhost:5000/api/portfolio/${username}`);
+        const res = await fetch(`${API_URL}/api/portfolio/${username}`);
         const data = await res.json();
         
         if (!res.ok) {

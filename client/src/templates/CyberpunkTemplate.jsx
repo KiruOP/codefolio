@@ -1,4 +1,5 @@
 import { useState, useEffect } from 'react';
+import API_URL from '../config';
 
 const CyberpunkTemplate = ({ data }) => {
   const { user, projects, skills } = data;
@@ -29,7 +30,7 @@ const CyberpunkTemplate = ({ data }) => {
     e.preventDefault();
     setStatus('sending');
     try {
-      const res = await fetch(`http://localhost:5000/api/portfolio/${user.username}/contact`, {
+      const res = await fetch(`${API_URL}/api/portfolio/${user.username}/contact`, {
         method: 'POST',
         headers: { 'Content-Type': 'application/json' },
         body: JSON.stringify(formData)

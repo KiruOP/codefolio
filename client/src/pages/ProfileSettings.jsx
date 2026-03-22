@@ -1,4 +1,5 @@
 import React, { useState, useEffect, useRef } from 'react';
+import API_URL from '../config';
 import { useOutletContext } from 'react-router-dom';
 
 const MAX_FILE_SIZE = 100 * 1024; // 100 KB
@@ -35,7 +36,7 @@ const ProfileSettings = () => {
     const fetchProfile = async () => {
       try {
         const token = localStorage.getItem('codefolio_token');
-        const res = await fetch('http://localhost:5000/api/users/profile', {
+        const res = await fetch(`${API_URL}/api/users/profile`, {
           headers: { 'Authorization': `Bearer ${token}` }
         });
         const data = await res.json();
@@ -119,7 +120,7 @@ const ProfileSettings = () => {
     
     try {
       const token = localStorage.getItem('codefolio_token');
-      const res = await fetch('http://localhost:5000/api/users/profile', {
+      const res = await fetch(`${API_URL}/api/users/profile`, {
         method: 'PUT',
         headers: {
           'Content-Type': 'application/json',

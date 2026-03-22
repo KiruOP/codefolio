@@ -1,6 +1,7 @@
 import { Outlet, useNavigate } from 'react-router-dom';
 import Sidebar from '../components/Sidebar';
 import BottomNav from '../components/BottomNav';
+import API_URL from '../config';
 import { useEffect, useState } from 'react';
 
 const DashboardLayout = () => {
@@ -17,7 +18,7 @@ const DashboardLayout = () => {
     // Always fetch fresh user data from the backend on load
     const fetchUser = async () => {
       try {
-        const res = await fetch('http://localhost:5000/api/users/profile', {
+        const res = await fetch(`${API_URL}/api/users/profile`, {
           headers: { 'Authorization': `Bearer ${token}` }
         });
         if (!res.ok) {

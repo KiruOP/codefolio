@@ -1,4 +1,5 @@
 import { useState, useEffect } from 'react';
+import API_URL from '../config';
 
 const TemplateSelector = () => {
   const [activeTemplate, setActiveTemplate] = useState('minimal');
@@ -11,7 +12,7 @@ const TemplateSelector = () => {
     const fetchUser = async () => {
       try {
         const token = localStorage.getItem('codefolio_token');
-        const res = await fetch('http://localhost:5000/api/auth/me', {
+        const res = await fetch(`${API_URL}/api/auth/me`, {
           headers: { 'Authorization': `Bearer ${token}` }
         });
         const data = await res.json();
@@ -32,7 +33,7 @@ const TemplateSelector = () => {
 
     try {
       const token = localStorage.getItem('codefolio_token');
-      const res = await fetch('http://localhost:5000/api/users/template', {
+      const res = await fetch(`${API_URL}/api/users/template`, {
         method: 'PUT',
         headers: {
           'Content-Type': 'application/json',

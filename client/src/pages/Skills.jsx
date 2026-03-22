@@ -1,4 +1,5 @@
 import { useState, useEffect } from 'react';
+import API_URL from '../config';
 import { Link } from 'react-router-dom';
 
 const Skills = () => {
@@ -13,7 +14,7 @@ const Skills = () => {
   const fetchSkills = async () => {
     try {
       const token = localStorage.getItem('codefolio_token');
-      const res = await fetch('http://localhost:5000/api/users/skills', {
+      const res = await fetch(`${API_URL}/api/users/skills`, {
         headers: { 'Authorization': `Bearer ${token}` }
       });
       const data = await res.json();
@@ -32,7 +33,7 @@ const Skills = () => {
       const token = localStorage.getItem('codefolio_token');
       const newSkills = skills.filter((_, idx) => idx !== indexToDelete);
       
-      const res = await fetch('http://localhost:5000/api/users/skills', {
+      const res = await fetch(`${API_URL}/api/users/skills`, {
         method: 'PUT',
         headers: {
           'Content-Type': 'application/json',
