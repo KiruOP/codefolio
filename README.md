@@ -242,11 +242,17 @@ npm start
 If the database is populated using the integrated seeder, you can log in to view the live dashboard and public portfolios at `http://localhost:5173/`:
 
 - **Minimal Template Persona:**
-  - Login: `johndoe` / `password123`
+  - Login: 
+    - Username: `johndoe` 
+    - Email: `john@example.com`
+    - Password: `password123`
   - URL: `/:username` -> `http://localhost:5173/johndoe`
 
 - **Cyberpunk PRO Persona:**
-  - Login: `neohacker` / `password123`
+  - Login: 
+    - Username: `neohacker` 
+    - Email: `neo@matrix.io`
+    - Password: `password123`
   - URL: `/:username` -> `http://localhost:5173/neohacker`
 
 ---

@@ -226,7 +226,7 @@ const MinimalTemplate = ({ data }) => {
       {/* Footer */}
       <footer className="bg-slate-50 border-t border-slate-200">
         <div className="max-w-7xl mx-auto py-12 px-8 flex flex-col md:flex-row justify-between items-center gap-6">
-          <span className="text-xs uppercase tracking-widest text-slate-500">© {new Date().getFullYear()} {name || user.username}. Built with intentionality.</span>
+          <span className="text-xs uppercase tracking-widest text-slate-500">© {new Date().getFullYear()} {name || user.username}. Built with CodeFolio.</span>
           <div className="flex gap-8">
             {socialLinks?.github && <a href={socialLinks.github} target="_blank" rel="noopener noreferrer" className="text-xs uppercase tracking-widest text-slate-400 hover:text-[#855300] hover:underline underline-offset-4 transition-all">Github</a>}
             {socialLinks?.linkedin && <a href={socialLinks.linkedin} target="_blank" rel="noopener noreferrer" className="text-xs uppercase tracking-widest text-slate-400 hover:text-[#855300] hover:underline underline-offset-4 transition-all">LinkedIn</a>}

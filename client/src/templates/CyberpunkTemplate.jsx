@@ -229,7 +229,7 @@ const CyberpunkTemplate = ({ data }) => {
             {/* Terminal Body */}
             <div className="p-6 md:p-8 font-mono text-sm min-h-[400px]">
               <div className="mb-6">
-                <p className="text-[#00f2ff]">ALEX_RIVERO_OS [Version 2.0.4]</p>
+                <p className="text-[#00f2ff]" style={{textTransform: 'uppercase'}}>{user.username} [Version 2.0.4]</p>
                 <p className="text-[#b9cacb]">© {new Date().getFullYear()} NEON_TERMINAL. All rights reserved.</p>
               </div>
 
