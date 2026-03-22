@@ -1,4 +1,4 @@
-import { useState } from 'react';
+import { useState, useEffect } from 'react';
 
 const CyberpunkTemplate = ({ data }) => {
   const { user, projects, skills } = data;
@@ -7,6 +7,23 @@ const CyberpunkTemplate = ({ data }) => {
 
   const [formData, setFormData] = useState({ name: '', email: '', message: '' });
   const [status, setStatus] = useState(null);
+  const [activeSection, setActiveSection] = useState('home');
+
+  // Scroll spy
+  useEffect(() => {
+    const sections = ['home', 'projects', 'skills', 'contact'];
+    const handleScroll = () => {
+      const scrollY = window.scrollY + 100;
+      let current = 'home';
+      sections.forEach((id) => {
+        const el = document.getElementById(id);
+        if (el && el.offsetTop <= scrollY) current = id;
+      });
+      setActiveSection(current);
+    };
+    window.addEventListener('scroll', handleScroll, { passive: true });
+    return () => window.removeEventListener('scroll', handleScroll);
+  }, []);
 
   const handleContactSubmit = async (e) => {
     e.preventDefault();
@@ -71,14 +88,18 @@ const CyberpunkTemplate = ({ data }) => {
 
       {/* TopAppBar */}
       <nav className="fixed top-0 w-full z-50 flex justify-between items-center px-6 h-16 bg-[#131313]/90 backdrop-blur-xl border-b border-cyan-500/20 shadow-[0_0_20px_rgba(0,242,255,0.15)]">
-        <div className="text-2xl font-black text-cyan-400 drop-shadow-[0_0_8px_rgba(0,242,255,0.8)] font-['Space_Grotesk'] uppercase tracking-tighter">
+        <a href={`/${user.username}`} className="text-2xl font-black text-cyan-400 drop-shadow-[0_0_8px_rgba(0,242,255,0.8)] font-['Space_Grotesk'] uppercase tracking-tighter hover:text-white transition-colors">
           &lt;{user.username} /&gt;
-        </div>
+        </a>
         <div className="hidden md:flex items-center gap-8 font-['Space_Grotesk'] uppercase tracking-tighter text-sm">
-          <a className="text-cyan-900/60 hover:text-cyan-400 transition-all duration-200 hover:bg-cyan-500/10 px-2 py-1" href="#home">HOME</a>
-          <a className="text-cyan-900/60 hover:text-cyan-400 transition-all duration-200 hover:bg-cyan-500/10 px-2 py-1" href="#projects">PROJECTS</a>
-          <a className="text-cyan-900/60 hover:text-cyan-400 transition-all duration-200 hover:bg-cyan-500/10 px-2 py-1" href="#skills">STACK</a>
-          <a className="text-cyan-400 border-b-2 border-cyan-400 pb-1 px-2" href="#contact">TERMINAL</a>
+          {[['home','HOME'],['projects','PROJECTS'],['skills','STACK'],['contact','TERMINAL']].map(([id,label]) => (
+            <a key={id} href={`#${id}`}
+              className={activeSection === id
+                ? 'text-cyan-400 border-b-2 border-cyan-400 pb-1 px-2'
+                : 'text-cyan-900/60 hover:text-cyan-400 transition-all duration-200 hover:bg-cyan-500/10 px-2 py-1'}>
+              {label}
+            </a>
+          ))}
         </div>
       </nav>
 

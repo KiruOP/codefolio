@@ -1,4 +1,4 @@
-import { useState } from 'react';
+import { useState, useEffect } from 'react';
 
 const MinimalTemplate = ({ data }) => {
   const { user, projects, skills } = data;
@@ -7,6 +7,23 @@ const MinimalTemplate = ({ data }) => {
   
   const [formData, setFormData] = useState({ name: '', email: '', message: '' });
   const [status, setStatus] = useState(null);
+  const [activeSection, setActiveSection] = useState('home');
+
+  // Scroll spy for active nav highlight
+  useEffect(() => {
+    const sections = ['home', 'projects', 'skills', 'contact'];
+    const handleScroll = () => {
+      const scrollY = window.scrollY + 100;
+      let current = 'home';
+      sections.forEach((id) => {
+        const el = document.getElementById(id);
+        if (el && el.offsetTop <= scrollY) current = id;
+      });
+      setActiveSection(current);
+    };
+    window.addEventListener('scroll', handleScroll, { passive: true });
+    return () => window.removeEventListener('scroll', handleScroll);
+  }, []);
 
   const handleContactSubmit = async (e) => {
     e.preventDefault();
@@ -29,17 +46,22 @@ const MinimalTemplate = ({ data }) => {
     setTimeout(() => setStatus(null), 4000);
   };
 
+  const navLinkClass = (section) =>
+    section === activeSection
+      ? 'text-amber-700 border-b-2 border-amber-600 pb-1 font-semibold'
+      : 'text-slate-600 hover:text-slate-900 transition-colors';
+
   return (
     <div className="bg-[#f9f9ff] text-[#141b2b] selection:bg-[#ffddb8] selection:text-[#2a1700] min-h-screen font-['Inter'] font-sans">
       {/* TopNavBar */}
       <nav className="fixed top-0 w-full z-50 bg-white/80 backdrop-blur-xl shadow-sm bg-gradient-to-b from-slate-100/50 to-transparent">
         <div className="max-w-7xl mx-auto flex justify-between items-center px-8 h-16">
-          <span className="text-xl font-bold tracking-tighter text-slate-900">{name || user.username}</span>
+          <a href={`/${user.username}`} className="text-xl font-bold tracking-tighter text-slate-900 hover:text-[#855300] transition-colors">{name || user.username}</a>
           <div className="hidden md:flex items-center space-x-8 tracking-tight text-sm font-medium">
-            <a className="text-amber-800 border-b-2 border-amber-600 pb-1" href="#home">Home</a>
-            <a className="text-slate-600 hover:text-slate-900 transition-colors" href="#projects">Projects</a>
-            <a className="text-slate-600 hover:text-slate-900 transition-colors" href="#skills">Skills</a>
-            <a className="text-slate-600 hover:text-slate-900 transition-colors" href="#contact">Contact</a>
+            <a className={navLinkClass('home')} href="#home">Home</a>
+            <a className={navLinkClass('projects')} href="#projects">Projects</a>
+            <a className={navLinkClass('skills')} href="#skills">Skills</a>
+            <a className={navLinkClass('contact')} href="#contact">Contact</a>
           </div>
           <a href={`mailto:${user.email}`} className="bg-gradient-to-br from-[#855300] to-[#f59e0b] text-white px-5 py-2 rounded-lg font-medium text-sm shadow-lg hover:opacity-90 active:scale-95 transition-all">
             Get in Touch

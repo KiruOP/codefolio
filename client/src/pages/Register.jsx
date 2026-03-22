@@ -29,152 +29,125 @@ const Register = () => {
 
       localStorage.setItem('codefolio_token', data.token);
       localStorage.setItem('codefolio_user', JSON.stringify(data));
-      navigate('/dashboard'); // TODO: Redirect to proper dashboard
+      navigate('/dashboard');
     } catch (err) {
       setError(err.message);
     }
   };
 
   return (
-    <div className="bg-background font-body text-on-background min-h-screen flex flex-col">
-      <main className="flex-grow flex items-center justify-center px-4 py-12 relative overflow-hidden">
-        {/* Background Decorative Elements */}
-        <div className="absolute top-0 left-0 w-full h-full -z-10 opacity-30 pointer-events-none">
-          <div className="absolute -top-24 -left-24 w-96 h-96 bg-primary-fixed blur-[120px] rounded-full"></div>
-          <div className="absolute top-1/2 -right-24 w-64 h-64 bg-secondary-fixed blur-[100px] rounded-full"></div>
-        </div>
+    <div className="min-h-screen flex flex-col font-['Inter'] bg-slate-50 relative overflow-hidden">
+      {/* Ambient blobs */}
+      <div className="absolute top-[-15%] left-[-10%] w-[40%] h-[40%] bg-amber-100/60 rounded-full blur-[120px] pointer-events-none" />
+      <div className="absolute bottom-[-10%] right-[-10%] w-[30%] h-[30%] bg-blue-100/40 rounded-full blur-[100px] pointer-events-none" />
 
-        {/* Registration Card Container */}
-        <div className="w-full max-w-md">
-          <div className="bg-surface-container-lowest rounded-xl shadow-[0_12px_24px_-4px_rgba(20,27,43,0.04)] p-8 md:p-10 border border-outline-variant/10">
-            {/* Logo & Header */}
-            <div className="flex flex-col items-center mb-10">
-              <div className="flex items-center gap-2 mb-6">
-                <span className="material-symbols-outlined text-primary text-3xl" style={{ fontVariationSettings: "'FILL' 1" }}>terminal</span>
-                <span className="text-xl font-bold tracking-tighter text-slate-900">CodeFolio</span>
-              </div>
-              <h1 className="text-2xl font-bold tracking-tight text-on-surface text-center">Create your account</h1>
-              <p className="text-on-surface-variant text-sm mt-2 font-medium">Join the community of elite builders.</p>
-            </div>
+      {/* Logo */}
+      <header className="flex justify-center pt-10 pb-6 z-10">
+        <Link to="/" className="text-2xl font-extrabold tracking-tight text-[#855300]">CodeFolio</Link>
+      </header>
 
-            {error && (
-              <div className="mb-6 flex items-center gap-3 p-4 bg-error-container rounded-xl border border-error/10">
-                <span className="material-symbols-outlined text-error text-[20px]">error</span>
-                <p className="text-on-error-container text-xs font-medium uppercase tracking-wider">{error}</p>
-              </div>
-            )}
-
-            {/* Registration Form */}
-            <form className="space-y-5" onSubmit={handleRegister}>
-              {/* Username Field (Added) */}
-              <div className="space-y-1.5">
-                <label className="block text-[0.75rem] font-medium uppercase tracking-[0.05em] text-on-surface-variant px-1" htmlFor="username">Username</label>
-                <div className="relative group">
-                  <input
-                    type="text"
-                    id="username"
-                    placeholder="johndoe"
-                    value={username}
-                    onChange={(e) => setUsername(e.target.value)}
-                    className="w-full bg-surface-container-high border-none rounded-lg py-3.5 px-4 text-on-surface placeholder:text-on-surface-variant/50 focus:ring-2 focus:ring-primary/40 transition-all outline-none"
-                    required
-                  />
-                </div>
-              </div>
-
-              {/* Email Field */}
-              <div className="space-y-1.5">
-                <label className="block text-[0.75rem] font-medium uppercase tracking-[0.05em] text-on-surface-variant px-1" htmlFor="email">Email Address</label>
-                <div className="relative group">
-                  <input
-                    type="email"
-                    id="email"
-                    placeholder="name@company.com"
-                    value={email}
-                    onChange={(e) => setEmail(e.target.value)}
-                    className="w-full bg-surface-container-high border-none rounded-lg py-3.5 px-4 text-on-surface placeholder:text-on-surface-variant/50 focus:ring-2 focus:ring-primary/40 transition-all outline-none"
-                    required
-                  />
-                </div>
-              </div>
-
-              {/* Password Field */}
-              <div className="space-y-1.5">
-                <label className="block text-[0.75rem] font-medium uppercase tracking-[0.05em] text-on-surface-variant px-1" htmlFor="password">Password</label>
-                <div className="relative group">
-                  <input
-                    type="password"
-                    id="password"
-                    placeholder="••••••••"
-                    value={password}
-                    onChange={(e) => setPassword(e.target.value)}
-                    className="w-full bg-surface-container-high border-none rounded-lg py-3.5 px-4 text-on-surface placeholder:text-on-surface-variant/50 focus:ring-2 focus:ring-primary/40 transition-all outline-none"
-                    required
-                  />
-                </div>
-                <p className="text-[0.7rem] text-on-surface-variant/70 flex items-center gap-1.5 px-1">
-                  <span className="material-symbols-outlined text-[14px]">info</span>
-                  Password must be at least 8 characters
-                </p>
-              </div>
-
-              {/* Confirm Password Field */}
-              <div className="space-y-1.5">
-                <label className="block text-[0.75rem] font-medium uppercase tracking-[0.05em] text-on-surface-variant px-1" htmlFor="confirm-password">Confirm Password</label>
-                <div className="relative group">
-                  <input
-                    type="password"
-                    id="confirm-password"
-                    placeholder="••••••••"
-                    value={confirmPassword}
-                    onChange={(e) => setConfirmPassword(e.target.value)}
-                    className="w-full bg-surface-container-high border-none rounded-lg py-3.5 px-4 text-on-surface placeholder:text-on-surface-variant/50 focus:ring-2 focus:ring-primary/40 transition-all outline-none"
-                    required
-                  />
-                </div>
-              </div>
-
-              {/* Submit Button */}
-              <div className="pt-4">
-                <button
-                  type="submit"
-                  className="w-full btn-gradient text-white font-bold py-4 px-6 rounded-lg shadow-lg hover:shadow-xl hover:scale-[1.01] active:scale-[0.98] transition-all flex items-center justify-center gap-2"
-                >
-                  <span>Create Account</span>
-                  <span className="material-symbols-outlined text-lg">arrow_forward</span>
-                </button>
-              </div>
-            </form>
-
-            {/* Footer Link */}
-            <div className="mt-8 text-center">
-              <p className="text-sm text-on-surface-variant">
-                Already have an account?
-                <Link to="/login" className="text-primary font-bold hover:underline underline-offset-4 ml-1 transition-colors">Sign In</Link>
-              </p>
-            </div>
+      {/* Card */}
+      <main className="flex-1 flex items-start justify-center px-4 z-10">
+        <div className="bg-white rounded-2xl shadow-[0_8px_32px_-4px_rgba(20,27,43,0.08)] border border-slate-100 w-full max-w-[480px] p-8 md:p-10">
+          <div className="mb-8 text-center">
+            <h1 className="text-2xl font-bold text-slate-900 tracking-tight">Create your account</h1>
+            <p className="text-slate-500 text-sm mt-1">Join the community of elite builders.</p>
           </div>
 
-          {/* Terms Note */}
-          <p className="mt-8 text-center text-[0.75rem] text-on-surface-variant/60 font-medium px-4">
-            By creating an account, you agree to our 
-            <a href="#" className="underline hover:text-primary transition-colors ml-1">Terms of Service</a> and 
-            <a href="#" className="underline hover:text-primary transition-colors ml-1">Privacy Policy</a>.
-          </p>
+          {/* Error Banner */}
+          {error && (
+            <div className="mb-6 flex items-center gap-3 px-4 py-3 bg-red-50 rounded-xl border border-red-100">
+              <span className="material-symbols-outlined text-red-500 text-[18px]">error</span>
+              <p className="text-red-700 text-xs font-semibold uppercase tracking-wider">{error}</p>
+            </div>
+          )}
+
+          <form className="space-y-4" onSubmit={handleRegister}>
+            <div className="space-y-1.5">
+              <label className="text-[0.7rem] font-semibold uppercase tracking-[0.08em] text-slate-500" htmlFor="username">Username</label>
+              <input
+                type="text"
+                id="username"
+                placeholder="johndoe"
+                value={username}
+                onChange={(e) => setUsername(e.target.value)}
+                className="w-full bg-slate-100 border-none rounded-xl px-4 py-3.5 text-slate-900 placeholder:text-slate-400 focus:ring-2 focus:ring-amber-500/40 focus:bg-slate-50 transition-all outline-none text-sm"
+                required
+              />
+            </div>
+
+            <div className="space-y-1.5">
+              <label className="text-[0.7rem] font-semibold uppercase tracking-[0.08em] text-slate-500" htmlFor="email">Email Address</label>
+              <input
+                type="email"
+                id="email"
+                placeholder="name@company.com"
+                value={email}
+                onChange={(e) => setEmail(e.target.value)}
+                className="w-full bg-slate-100 border-none rounded-xl px-4 py-3.5 text-slate-900 placeholder:text-slate-400 focus:ring-2 focus:ring-amber-500/40 focus:bg-slate-50 transition-all outline-none text-sm"
+                required
+              />
+            </div>
+
+            <div className="space-y-1.5">
+              <label className="text-[0.7rem] font-semibold uppercase tracking-[0.08em] text-slate-500" htmlFor="password">Password</label>
+              <input
+                type="password"
+                id="password"
+                placeholder="••••••••"
+                value={password}
+                onChange={(e) => setPassword(e.target.value)}
+                className="w-full bg-slate-100 border-none rounded-xl px-4 py-3.5 text-slate-900 placeholder:text-slate-400 focus:ring-2 focus:ring-amber-500/40 focus:bg-slate-50 transition-all outline-none text-sm"
+                required
+              />
+              <p className="text-[0.7rem] text-slate-400 flex items-center gap-1.5 px-1">
+                <span className="material-symbols-outlined text-[13px]">info</span>
+                Password must be at least 8 characters
+              </p>
+            </div>
+
+            <div className="space-y-1.5">
+              <label className="text-[0.7rem] font-semibold uppercase tracking-[0.08em] text-slate-500" htmlFor="confirm-password">Confirm Password</label>
+              <input
+                type="password"
+                id="confirm-password"
+                placeholder="••••••••"
+                value={confirmPassword}
+                onChange={(e) => setConfirmPassword(e.target.value)}
+                className="w-full bg-slate-100 border-none rounded-xl px-4 py-3.5 text-slate-900 placeholder:text-slate-400 focus:ring-2 focus:ring-amber-500/40 focus:bg-slate-50 transition-all outline-none text-sm"
+                required
+              />
+            </div>
+
+            <button
+              type="submit"
+              className="w-full mt-2 bg-gradient-to-br from-amber-600 to-amber-500 text-white font-semibold py-3.5 rounded-xl shadow-md shadow-amber-200 hover:opacity-95 active:scale-[0.98] transition-all duration-200 text-sm flex items-center justify-center gap-2"
+            >
+              Create Account
+              <span className="material-symbols-outlined text-[18px]">arrow_forward</span>
+            </button>
+          </form>
+
+          <div className="mt-7 text-center text-sm text-slate-500">
+            Already have an account?{' '}
+            <Link to="/login" className="text-amber-600 font-semibold hover:text-amber-700 transition-colors">Sign In</Link>
+          </div>
         </div>
       </main>
 
-      {/* Shared Footer Component */}
-      <footer className="w-full mt-auto py-8">
-        <div className="flex flex-col md:flex-row justify-between items-center px-8 gap-4 max-w-7xl mx-auto">
-          <div className="text-[0.75rem] font-medium uppercase tracking-[0.05em] text-slate-400">
-            © 2024 CodeFolio. Crafted for creators.
-          </div>
-          <div className="flex gap-6">
-            <a href="#" className="text-[0.75rem] font-medium uppercase tracking-[0.05em] text-slate-400 hover:text-amber-600 transition-colors opacity-80 hover:opacity-100">Privacy Policy</a>
-            <a href="#" className="text-[0.75rem] font-medium uppercase tracking-[0.05em] text-slate-400 hover:text-amber-600 transition-colors opacity-80 hover:opacity-100">Terms of Service</a>
-            <a href="#" className="text-[0.75rem] font-medium uppercase tracking-[0.05em] text-slate-400 hover:text-amber-600 transition-colors opacity-80 hover:opacity-100">Support</a>
-          </div>
+      <div className="z-10 text-center py-6 text-xs text-slate-400">
+        By creating an account, you agree to our{' '}
+        <a href="#" className="underline hover:text-amber-600 transition-colors">Terms of Service</a>{' '}
+        and{' '}
+        <a href="#" className="underline hover:text-amber-600 transition-colors">Privacy Policy</a>.
+      </div>
+
+      <footer className="z-10 border-t border-slate-200 px-6 py-4 flex flex-col sm:flex-row justify-between items-center gap-3">
+        <span className="text-[11px] uppercase tracking-widest text-slate-400">© 2024 CodeFolio. Crafted for creators.</span>
+        <div className="flex gap-6">
+          <a href="#" className="text-[11px] uppercase tracking-widest text-slate-400 hover:text-amber-600 transition-colors">Privacy Policy</a>
+          <a href="#" className="text-[11px] uppercase tracking-widest text-slate-400 hover:text-amber-600 transition-colors">Terms of Service</a>
+          <a href="#" className="text-[11px] uppercase tracking-widest text-slate-400 hover:text-amber-600 transition-colors">Support</a>
         </div>
       </footer>
     </div>
