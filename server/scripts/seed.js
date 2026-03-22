@@ -8,6 +8,12 @@ const User = require('../models/User');
 const Project = require('../models/Project');
 const Message = require('../models/Message');
 
+// Placeholder Base64 for Avatar (1x1 transparent PNG)
+const placeholderAvatar = "data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAAAEAAAABCAQAAAC1HAwCAAAAC0lEQVR42mNkYAAAAAYAAjCB0C8AAAAASUVORK5CYII=";
+
+// Placeholder Base64 for PDF (Minimal valid PDF)
+const placeholderResume = "data:application/pdf;base64,JVBERi0xLjAKMSAwIG9iagogIDw8IC9UeXBlIC9DYXRhbG9nCiAgICAgL1BhZ2VzIDIgMCBSCiAgPj4KZW5kb2JqCjIgMCBvYmogIDw8IC9UeXBlIC9QYWdlcyAvS2lkcyBbMyAwIFJdIC9Db3VudCAxID4+IGVuZG9iagozIDAgb2JqICA8PCAvVHlwZSAvUGFnZSAvUGFyZW50IDIgMCBSIC9NZWRpYUJveCBbMCAwIDYxMiA3OTJdID4+IGVuZG9iagp0cmFpbGVyIDw8IC9Sb290IDEgMCBSID4+CiUlRU9G";
+
 const seedDB = async () => {
   try {
     const mongoUri = process.env.MONGO_URI || "mongodb://localhost:27017/codefolio";
@@ -40,10 +46,13 @@ const seedDB = async () => {
         company: 'Vercel',
         location: 'San Francisco, CA',
         bio: 'Senior Product Engineer specializing in high-performance React architectures and accessible UI/UX systems. I construct scalable web applications using Next.js and Tailwind CSS.',
+        avatar: placeholderAvatar,
+        resumeData: placeholderResume,
+        resumeName: "john_doe_cv.pdf",
         socialLinks: {
-          github: 'https://github.com',
-          linkedin: 'https://linkedin.com',
-          twitter: 'https://twitter.com'
+          github: 'https://github.com/johndoe',
+          linkedin: 'https://linkedin.com/in/johndoe',
+          website: 'https://johndoe.dev'
         }
       },
       skills: [
@@ -96,9 +105,13 @@ const seedDB = async () => {
         company: 'Zion Mainframe',
         location: 'Sector 01',
         bio: 'Systems Architect and Security Expert. I operate in the shadows of the web, constructing impenetrable backend clusters and bleeding-edge neural interfaces.',
+        avatar: placeholderAvatar,
+        resumeData: placeholderResume,
+        resumeName: "neo_manifesto.pdf",
         socialLinks: {
-          github: 'https://github.com',
-          twitter: 'https://twitter.com'
+          github: 'https://github.com/neo',
+          linkedin: 'https://linkedin.com/in/neo',
+          website: 'https://matrix.io'
         }
       },
       skills: [
