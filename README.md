@@ -1,306 +1,202 @@
-# 🚀 CodeFolio – Developer Portfolio Builder
+# 🚀 CodeFolio
 
-> A no-code/low-code portfolio builder for developers to create and share stunning personal websites in minutes.
+A modern developer portfolio generator that allows engineers to create and deploy professional portfolios instantly using structured data and pre-built templates.
 
 ---
 
 ## 📌 Overview
 
-In today’s tech ecosystem, a strong portfolio is as important as a resume. However, many developers struggle to build and deploy their own portfolio websites due to time constraints and design challenges.
-
-**CodeFolio** solves this problem by acting as a **developer-focused website builder**, similar to platforms like Wix and Squarespace, but tailored specifically for engineers.
-
-Users can input their professional details (projects, skills, bio, links), and CodeFolio dynamically generates a **beautiful, shareable portfolio website**.
+CodeFolio is a full-stack application that converts developer data (projects, skills, profile) into a live portfolio website.
+It eliminates the need to build portfolios from scratch and focuses on speed, simplicity, and performance.
 
 ---
 
-## 🎯 Key Features
+## ❗ Problem Statement
 
-### 🛠️ Dashboard (CMS)
-
-* Add and manage profile details
-* Create and edit projects
-* Organize skills by category
-* Select portfolio templates
-* (Bonus) Live preview while editing
-
-### 🎨 Dynamic Template Engine
-
-* Multiple portfolio themes (Minimal, Cyberpunk)
-* Template switching using `templateId`
-* Data-driven UI rendering
-
-### 🌐 Public Portfolio
-
-* Unique user URLs:
-
-  ```
-  codefolio.com/:username
-  ```
-* Fully responsive design
-* SEO optimized pages
-
-### 📧 Contact System
-
-* Built-in contact form
-* Secure email forwarding using Nodemailer
-
-### 💎 Premium Features (Planned)
-
-* Custom domains
-* Pro badge
-* Advanced customization
+Developers often spend too much time building personal portfolio websites instead of focusing on actual work.
+CodeFolio solves this by providing a no-code/low-code system to generate portfolios instantly with minimal effort.
 
 ---
 
-## 🧱 Tech Stack
+## ✨ Features
 
-### Frontend
+* Dashboard-based portfolio builder (CMS)
+* Dynamic project & skill management
+* Multiple portfolio templates
+* Real-time preview (dashboard)
+* Public portfolio via `/username`
+* SEO optimization (dynamic meta tags)
+* Contact form with email integration
 
-* React
+---
+
+## 🛠 Tech Stack
+
+**Frontend**
+
+* React (Vite)
+* Tailwind CSS
 * React Router
-* React Hook Form
 * React Helmet
 
-### Backend
+**Backend**
 
 * Node.js
 * Express.js
 
-### Database
+**Database**
 
-* MongoDB
+* MongoDB (Mongoose)
 
-### Tools & Services
+**Other Tools**
 
+* JWT Authentication
+* Bcrypt
 * Nodemailer
-* Git & GitHub
-* Vercel / Render (Deployment)
 
 ---
 
-## 🏗️ Project Architecture
 
-```
-codefolio/
-│
-├── client/          # React Frontend
-│   ├── components/
-│   ├── pages/
-│   ├── templates/
-│   └── utils/
-│
-├── server/          # Node.js Backend
-│   ├── models/
-│   ├── routes/
-│   ├── controllers/
-│   └── config/
-│
-└── README.md
-```
+## 📁 Project Structure
 
----
-
-## 🧩 Core Concepts
-
-### 🔹 Template Engine
-
-Dynamic rendering based on selected template:
-
-```js
-const templateMap = {
-  minimal: MinimalLayout,
-  cyberpunk: CyberpunkLayout
-};
-
-const PortfolioLayout = templateMap[user.templateId];
-return <PortfolioLayout data={userData} />;
+```text
+CodeFolio/
+├── client/                # React Frontend
+│   ├── src/
+│   │   ├── components/    # Reusable UI components (Sidebar, TopNav, etc.)
+│   │   ├── pages/         # Page-level components (Dashboard, Profile, etc.)
+│   │   ├── templates/     # Dynamic portfolio templates & Layouts
+│   │   ├── App.jsx        # Root routing and providers
+│   │   └── main.jsx       # Mount point
+├── server/                # Express Backend
+│   ├── controllers/       # Request handlers (logic)
+│   ├── models/            # Mongoose schemas (data)
+│   ├── routes/            # API endpoints
+│   ├── middleware/        # Auth guards (JWT)
+│   └── index.js           # Server entry point
+└── README.md              # Project documentation
 ```
 
 ---
 
-### 🔹 Routing System
-
-* Dashboard Routes:
-
-  ```
-  /dashboard
-  /login
-  /register
-  ```
-
-* Public Portfolio:
-
-  ```
-  /:username
-  ```
-
-Backend handles:
-
-```js
-GET /:username
-```
-
----
-
-### 🔹 Data Model (Simplified)
-
-```js
-{
-  username,
-  profile: { name, bio, socialLinks },
-  skills: [{ category, items }],
-  projects: [{ title, techStack, links }],
-  templateId
-}
-```
-
----
-
-## ⚙️ Installation & Setup
-
-### 1️⃣ Clone the Repository
+## ⚙️ Setup
 
 ```bash
-git clone https://github.com/your-username/codefolio.git
-cd codefolio
-```
+# Clone repo
+git clone https://github.com/kiruop/CodeFolio.git
+cd CodeFolio
 
----
+# Install dependencies
+cd client && npm install
+cd ../server && npm install
 
-### 2️⃣ Setup Backend
+# Create .env file using .env.example (ensure MongoDB Atlas is configured):
 
-```bash
-cd server
-npm install
-```
-
-Create `.env` file (ensure MongoDB Atlas is configured):
-
-```
 PORT=5000
 MONGO_URI=your_mongodb_connection
 EMAIL_USER=your_email
 EMAIL_PASS=your_password
-```
+JWT_SECRET=your_jwt_secret
 
-**Optional: Seed Demo Data**
-To quickly populate the database with demo users (Minimal and Cyberpunk themes):
-```bash
-node scripts/seed.js
-```
+# Run backend
+cd server
+npm run dev
 
-Run server:
-
-```bash
+# Run frontend
+cd client
 npm run dev
 ```
 
 ---
 
-### 3️⃣ Setup Frontend
+## 🔑 Demo Credentials
 
-```bash
-cd client
-npm install
-npm start
-```
-
----
-
-## 🚀 Deployment
-
-* Frontend: Vercel
-* Backend: Render / Railway
-* Database: MongoDB Atlas
-
----
-
-## 🧪 Testing Checklist
-
-* ✅ Responsive design (mobile + desktop)
-* ✅ API error handling
-* ✅ Form validation
-* ✅ SEO metadata
-* ✅ Performance optimization
-
----
-
-## 📅 Development Timeline
-
-| Week   | Focus                          |
-| ------ | ------------------------------ |
-| Week 1 | Backend + Dashboard Forms      |
-| Week 2 | Template Engine + Public Pages |
-| Week 3 | Live Preview + SEO             |
-| Week 4 | Contact Form + Deployment      |
-
----
-
-## 📸 Live Demos
-
-If the database is populated using the integrated seeder, you can log in to view the live dashboard and public portfolios at `http://localhost:5173/`:
 
 - **Minimal Template Persona:**
   - Login: 
     - Username: `johndoe` 
     - Email: `john@example.com`
     - Password: `password123`
-  - URL: `/:username` -> `http://localhost:5173/johndoe`
 
 - **Cyberpunk PRO Persona:**
   - Login: 
     - Username: `neohacker` 
     - Email: `neo@matrix.io`
     - Password: `password123`
-  - URL: `/:username` -> `http://localhost:5173/neohacker`
 
 ---
 
-## 🧠 System Design Notes
+## 📸 Screenshots
 
-* Used **dynamic routing (`/:username`)** for portfolio pages
-* Template rendering handled via **component mapping**
-* Separation of concerns:
-
-  * CMS (Dashboard)
-  * Portfolio Renderer (Public UI)
+*Add screenshots of dashboard, templates, and public portfolio here*
 
 ---
 
-## 🔮 Future Enhancements
+## 🧠 System Design Note
 
-* Drag & drop layout builder
-* Analytics dashboard (profile views)
-* Theme customization
+The routing for dynamic portfolio URLs (`/:username`) is handled using a **backend-driven approach**.
+
+* A generic route is defined in the backend:
+
+  ```
+  GET /:username
+  ```
+
+* When a request is made, the server:
+
+  1. Extracts the `username` from the URL
+  2. Queries the database to find the corresponding user
+  3. Returns the user’s portfolio data
+
+* On the frontend, React uses this data to dynamically render the portfolio using the selected template.
+
+### Why Backend Routing?
+
+* Ensures data is fetched securely before rendering
+* Improves SEO by serving correct metadata
+* Allows direct access to portfolio URLs without relying solely on client-side routing
+
+### Alternative Consideration
+
+React Router parameters (`useParams`) could be used for client-side routing, but backend routing was preferred to ensure:
+
+* Better SEO handling
+* Reliable data fetching
+* Direct URL access without dependency on frontend state
+
+---
+
+
+---
+
+## 🤝 Contribution Guide
+
+1. Fork the repository
+2. Create a feature branch
+3. Commit changes
+4. Push and open a Pull Request
+
+---
+
+## 🚧 Future Todos
+
+* More portfolio templates
 * Custom domain support
+* Drag-and-drop builder
+* Analytics dashboard
 
 ---
 
-## 🤝 Contributing
+## 📜 License
 
-Contributions are welcome!
-Feel free to fork the repo and submit a PR.
-
----
-
-## 📄 License
-
-This project is licensed under the MIT License.
+MIT License
 
 ---
 
-## 👨‍💻 Author
+## 👨‍💻 Developer
 
-**Kiran Biradar**
+**Name:** Kiran Biradar
 
-* GitHub: [https://github.com/kiruop](https://github.com/kiruop)
-* LinkedIn: [https://linkedin.com/in/kiranbiradar](https://linkedin.com/in/kiranbiradar)
-
----
-
-## ⭐ Acknowledgements
-
-Inspired by modern website builders like Wix and Squarespace.
+**GitHub:** https://github.com/kiruop
 
 ---
