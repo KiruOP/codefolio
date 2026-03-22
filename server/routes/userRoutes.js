@@ -1,7 +1,12 @@
 const express = require('express');
 const router = express.Router();
 const { protect } = require('../middleware/authMiddleware');
-const { updateProfile, getSkills, updateSkills, updateTemplate } = require('../controllers/userController');
+const { getProfile, updateProfile, getSkills, updateSkills, updateTemplate } = require('../controllers/userController');
+
+// @route   GET /api/users/profile
+// @desc    Get current user profile
+// @access  Private
+router.get('/profile', protect, getProfile);
 
 // @route   PUT /api/users/profile
 // @desc    Update user profile & social links

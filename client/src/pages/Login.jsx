@@ -21,8 +21,9 @@ const Login = () => {
       const data = await res.json();
       if (!res.ok) throw new Error(data.message || 'Login failed');
 
+      // Store token and user in a consistent format
       localStorage.setItem('codefolio_token', data.token);
-      localStorage.setItem('codefolio_user', JSON.stringify(data));
+      localStorage.setItem('codefolio_user', JSON.stringify({ user: data, token: data.token }));
       navigate('/dashboard');
     } catch (err) {
       setError(err.message);

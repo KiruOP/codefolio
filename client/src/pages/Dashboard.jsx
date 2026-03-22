@@ -1,23 +1,7 @@
 import { useOutletContext, Link } from 'react-router-dom';
-import { useEffect, useState } from 'react';
 
 const Dashboard = () => {
-  const { user: ctxUser } = useOutletContext();
-  const [user, setUser] = useState(ctxUser);
-
-  // If the context user isn't available yet (layout still loading), get from localStorage
-  useEffect(() => {
-    if (!ctxUser) {
-      const stored = localStorage.getItem('codefolio_user');
-      if (stored) {
-        try {
-          setUser(JSON.parse(stored).user);
-        } catch {}
-      }
-    } else {
-      setUser(ctxUser);
-    }
-  }, [ctxUser]);
+  const { user } = useOutletContext();
 
   const displayName = user?.profile?.name || user?.username || 'Developer';
   const username = user?.username;

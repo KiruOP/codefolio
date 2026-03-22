@@ -9,13 +9,42 @@ const DashboardLayout = () => {
 
   useEffect(() => {
     const token = localStorage.getItem('codefolio_token');
-    const userData = localStorage.getItem('codefolio_user');
-    
     if (!token) {
       navigate('/login');
-    } else if (userData) {
-      setUser(JSON.parse(userData).user);
+      return;
     }
+
+    // Always fetch fresh user data from the backend on load
+    const fetchUser = async () => {
+      try {
+        const res = await fetch('http://localhost:5000/api/users/profile', {
+          headers: { 'Authorization': `Bearer ${token}` }
+        });
+        if (!res.ok) {
+          // Token expired or invalid
+          localStorage.removeItem('codefolio_token');
+          localStorage.removeItem('codefolio_user');
+          navigate('/login');
+          return;
+        }
+        const data = await res.json();
+        setUser(data);
+        // Keep localStorage in sync so other parts of app can read it
+        localStorage.setItem('codefolio_user', JSON.stringify({ user: data, token }));
+      } catch {
+        // If the fetch fails (server down), fall back to cached data
+        const cached = localStorage.getItem('codefolio_user');
+        if (cached) {
+          try {
+            const parsed = JSON.parse(cached);
+            // Handle both { user: {...} } and flat { _id, username, ... } formats
+            setUser(parsed.user || parsed);
+          } catch {}
+        }
+      }
+    };
+
+    fetchUser();
   }, [navigate]);
 
   return (
