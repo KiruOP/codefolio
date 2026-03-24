@@ -128,8 +128,11 @@ npm run dev
 
 ## 📸 Screenshots
 
-*Add screenshots of dashboard, templates, and public portfolio here*
+![dashboard_screenshot](images/dashboard.png)
 
+![minimal_template_screenshot](images/minimal_template.png)
+
+![cyberpunk_template_screenshot](images/cyberpunk_template.png)
 ---
 
 ## 🧠 System Design Note
@@ -199,4 +202,6 @@ MIT License
 
 **GitHub:** https://github.com/kiruop
 
+**Linkedin:** https://www.linkedin.com/in/kiranbiradar/
+   
 ---
